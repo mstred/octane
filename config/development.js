@@ -17,7 +17,7 @@
 */
 
 var config = {
-  appName: 'Geddy App (development)'
+  appName: 'Octane (development)'
 , detailedErrors: true
 , debug: true
 , watch: {

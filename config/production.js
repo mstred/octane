@@ -17,7 +17,7 @@
 */
 
 var config = {
-  appName: 'Geddy App'
+  appName: 'Octane'
 , detailedErrors: false
 , hostname: null
 , port: 4000

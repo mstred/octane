@@ -2,7 +2,6 @@ body {
   background: url('../img/whitey.png');
 }
 body.application {
-  padding-top: 60px;
   padding-bottom: 40px;
 }
 code {

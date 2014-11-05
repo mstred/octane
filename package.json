@@ -4,7 +4,10 @@
   "author": "",
   "dependencies": {
     "handlebars": "latest",
-    "jake": "latest"
+    "nodemailer": "latest",
+    "jake": "0.5.x",
+    "passport": "0.1.x",
+    "bcrypt": "0.7.x"
   },
   "devDependencies": {},
   "engines": {
