@@ -16,21 +16,23 @@
  *
 */
 var strategies = require('../helpers/passport/strategies')
-  , authTypes = geddy.mixin(strategies, {local: {name: 'local account'}});;
+  , authTypes = geddy.mixin(strategies, {local: {name: 'local account'}})
+  , requireAuth = require('../helpers/passport').requireAuth;
+var Auth = geddy.controller.create('Auth');
 
 var Main = function () {
 
+  this.before(requireAuth);
+  this.before(function() { Auth.validate(this); });
+
   this.index = function (req, resp, params) {
-    var self = this
-      , User = geddy.model.User;
-    User.first({id: this.session.get('userId')}, function (err, user) {
-      var data = {
-        user: null
-      , authType: null
-      };
+    var self = this, session = this.session;
+    geddy.model.User.first({id: session.get('userId')}, function (err, user) {
+      var data = { user: null, authType: null, logged: false };
       if (user) {
         data.user = user;
-        data.authType = authTypes[self.session.get('authType')].name;
+        data.authType = authTypes[session.get('authType')].name;
+        data.logged = self.logged;
       }
       self.respond(data, {
         format: 'html'
@@ -49,6 +51,7 @@ var Main = function () {
   this.logout = function (req, resp, params) {
     this.session.unset('userId');
     this.session.unset('authType');
+    params.logged = false;
     this.respond(params, {
       format: 'html'
     , template: 'app/views/main/logout'

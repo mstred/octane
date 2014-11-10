@@ -13,6 +13,11 @@
               <li>{{{linkTo 'Tutorial' 'http://geddyjs.org/tutorial'}}}</li>
               <li>{{{linkTo 'Docs' 'http://geddyjs.org/documentation'}}}</li>
             </ul>
+              {{#if logged}}
+                <ul class="nav pull-right">
+                  <li>{{{linkTo 'Logout' logoutPath}}}</li>
+                </ul>
+              {{/if}}
           </div><!--/.nav-collapse -->
         </div>
       </div>
