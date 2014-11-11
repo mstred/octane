@@ -31,14 +31,16 @@ var Users = function () {
 
   this.index = function (req, resp, params) {
     var self = this;
-
     geddy.model.User.all(function(err, users) {
-      self.respond({params: params, users: users});
+      self.respond({params: params, users: users, logged: self.session.logged});
     });
   };
 
   this.add = function (req, resp, params) {
-    this.respond({params: params});
+    console.log(this.session);
+    (this.session.get('userId')) ?
+      this.redirect({controller: 'users', action: 'index'}) :
+      this.respond({params: params});
   };
 
   this.create = function (req, resp, params) {
@@ -158,7 +160,9 @@ var Users = function () {
       }
       else {
         user.password = '';
-        self.respondWith(user);
+        self.respond({ 
+          user: user, logged: self.session.logged 
+        });
       }
     });
   };

@@ -15,6 +15,9 @@ exports.requireAuth = function () {
     this.session.set('successRedirect', this.request.url);
     this.flash.keep('success');
     this.redirect('/login');
+    this.session.logged = false;
+  } else {
+    this.session.logged = true;
   }
 };
 
