@@ -43,4 +43,5 @@ router.get('/login').to('Main.login');
 router.get('/logout').to('Main.logout');
 router.post('/auth/local').to('Auth.local');
 router.resource('users');
+router.resource('posts');
 exports.router = router;
