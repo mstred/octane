@@ -3,10 +3,17 @@ var requireAuth = require('../helpers/passport').requireAuth;
 var Posts = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
 
-  this.before(requireAuth);
+  // this.before(requireAuth);
 
   this.index = function (req, resp, params) {
-    this.respond({params: params, logged: this.session.logged});
+    var _this = this;
+    geddy.model.Post.all(function(err, posts) {
+      if (err) {
+        _this.error(err);
+      } else {
+        _this.respondWith(posts);
+      }
+    });
   };
 
   this.add = function (req, resp, params) {
@@ -15,10 +22,15 @@ var Posts = function () {
 
   this.create = function (req, resp, params) {
     // Save the resource, then display index page
+    var _this = this;
     var post = geddy.model.Post.create(JSON.parse(req.body));
-    console.log(post)
-    this.respond(post);
-    // this.redirect({controller: this.name});
+    post.save(function (err, data) {
+      if (err) {
+        _this.error(err);
+      } else {
+        _this.respond(null, {statusCode: 201});
+      }
+    });
   };
 
   this.show = function (req, resp, params) {
@@ -35,7 +47,18 @@ var Posts = function () {
   };
 
   this.remove = function (req, resp, params) {
-    this.respond({params: params});
+    var _this = this;
+    geddy.model.Post.first(params.id, function(err, post) {
+      if (err) throw err;
+      if (!post) {
+        throw new geddy.errors.BadRequestError();
+      } else {
+        geddy.model.Post.remove(params.id, function(err) {
+          if (err) throw err;
+          _this.respondWith(post);
+        });
+      }
+    });
   };
 
 };
