@@ -35,7 +35,8 @@ var config = {
 , hostname: null
 , port: 4000
 , model: {
-    defaultAdapter: 'filesystem'
+    defaultAdapter: 'filesystem',
+    autoIncrement: true
   }
 , sessions: {
     store: 'filesystem'

@@ -1,4 +1,8 @@
-var requireAuth = require('../helpers/passport').requireAuth;
+var requireAuth = require('../helpers/passport').requireAuth
+  , tagsByPost = require('../helpers/posts').tagsByPost;
+
+var Post = geddy.model.Post
+, Tag = geddy.model.Tag;
 
 var Posts = function () {
   this.respondsWith = ['html', 'json', 'xml', 'js', 'txt'];
@@ -6,12 +10,13 @@ var Posts = function () {
   // this.before(requireAuth);
 
   this.index = function (req, resp, params) {
-    var _this = this;
-    geddy.model.Post.all(function(err, posts) {
+    var self = this;
+    Post.all(function(err, posts) {
       if (err) {
-        _this.error(err);
+        self.error(err);
       } else {
-        _this.respondWith(posts);
+        posts.forEach(tagsByPost);
+        self.respondWith(posts);
       }
     });
   };
@@ -21,20 +26,27 @@ var Posts = function () {
   };
 
   this.create = function (req, resp, params) {
-    // Save the resource, then display index page
-    var _this = this;
-    var post = geddy.model.Post.create(JSON.parse(req.body));
-    post.save(function (err, data) {
-      if (err) {
-        _this.error(err);
-      } else {
-        _this.respond(null, {statusCode: 201});
-      }
+    var self = this;
+    var post = Post.create(params);
+    post.save(function(e, d) {
+      if (e) throw e;
+      params.tags.forEach(function(el) {
+        post.addTag(Tag.create({ value: el }));
+      });
+    });
+    post.save(function (e, d) { 
+      if (e) throw e;
+      self.respond(null, {statusCode: 201});
     });
   };
 
   this.show = function (req, resp, params) {
-    this.respond({params: params});
+    var self = this;
+    Post.first({ id: params.id }, function(e, post) {
+      if (e) self.error(err);
+      tagsByPost(post);
+      self.respondWith(post);
+    });
   };
 
   this.edit = function (req, resp, params) {
@@ -48,20 +60,18 @@ var Posts = function () {
 
   this.remove = function (req, resp, params) {
     var _this = this;
-    geddy.model.Post.first(params.id, function(err, post) {
+    Post.first(params.id, function(err, post) {
       if (err) throw err;
       if (!post) {
         throw new geddy.errors.BadRequestError();
       } else {
-        geddy.model.Post.remove(params.id, function(err) {
+        Post.remove(params.id, function(err) {
           if (err) throw err;
           _this.respondWith(post);
         });
       }
     });
   };
-
 };
 
 exports.Posts = Posts;
-

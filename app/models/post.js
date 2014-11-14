@@ -5,8 +5,7 @@ var Post = function () {
     content: {type: 'text'}
   });
 
-  this.autoIncrementId = true;
-
+  this.hasMany('Tags');
   /*
   this.property('login', 'string', {required: true});
   this.property('password', 'string', {required: true});
@@ -43,5 +42,6 @@ Post.someStaticMethod = function () {
 Post.someStaticProperty = 'YYZ';
 */
 
-exports.Post = Post;
+Post = geddy.model.register('Post', Post);
 
+exports.Post = Post;

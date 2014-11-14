@@ -21,9 +21,11 @@ var config = {
 , detailedErrors: false
 , hostname: null
 , port: 4000
+/*
 , model: {
     defaultAdapter: 'mongo'
   }
+
 , db: {
     mongo: {
       username: null
@@ -34,22 +36,22 @@ var config = {
     , port: 27017
     }
   }
-
-/* // Using Postgres as the default, with only a Postgres DB
+*/
+ // Using Postgres as the default, with only a Postgres DB
 , model: {
     defaultAdapter: 'postgres'
   }
 , db: {
     postgres: {
-      user: process.env.USER
-    , database: process.env.USER
-    , password: null
-    , host: null
+      user: postgres
+    , database: octane
+    , password: process.env.LOCAL_DB_ENV
+    , host: localhost
     , port: 5432
     , ssl: true
     }
   }
-*/
+
 
 /* // Using MySQL as the default, with only a MySQL DB
 , model: {
