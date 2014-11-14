@@ -44,4 +44,5 @@ router.get('/logout').to('Main.logout');
 router.post('/auth/local').to('Auth.local');
 router.resource('users');
 router.resource('posts');
+router.resource('tags');
 exports.router = router;

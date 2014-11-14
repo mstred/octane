@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "author": "",
   "dependencies": {
+    "bcrypt": "0.7.x",
     "handlebars": "latest",
-    "nodemailer": "latest",
     "jake": "0.5.x",
+    "nodemailer": "latest",
     "passport": "0.1.x",
-    "bcrypt": "0.7.x"
+    "pg": "^3.6.3"
   },
   "devDependencies": {},
   "engines": {
