@@ -8,11 +8,6 @@ code {
   white-space: pre;
 }
 
-.navbar-fixed-top {
-  box-shadow: 0px 0px 3px #000;
-  border-bottom: 1px solid #999;
-}
-
 .geddy-welcome-box {
   text-align: center;
   background-color: rgba(200, 200, 200, .5);
@@ -52,7 +47,7 @@ code {
 }
 
 #flash-container {
-  margin-top: 48px;
+  margin-top: 64px;
 }
 
 @media (max-width:480px) {
@@ -61,4 +56,3 @@ code {
     margin-top: 10px;
   }
 }
-

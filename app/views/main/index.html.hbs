@@ -1,24 +1,16 @@
 <!-- Lets talk about geddy -->
-<div class="hero-unit geddy-welcome-box">
-  {{#if user}}
-    <h1>
-        Hello
-        {{#if user.givenName}}
-          {{ user.givenName }}
-        {{/if}}
-    </h1>
-    <p>You've successfully logged in to this Geddy app (via {{ authType }}).</p>
-  {{else}}
-    <h1>Hello, stranger</h1>
-    <p>You're not authenticated with this app.</p>
-    <p>{{{ linkTo 'Click here to create a user account.' addUserPath }}}</p>
-    <p>{{{ linkTo 'Click here to log in' loginPath }}}</p>
-  {{/if}}
-</div>
+
 {{#if user}}
   <div class="row list-item">
     <div class="span12">
       <h3><a href="{{{ postsPath }}}">Posts API</a></h3>
     </div>
+  </div>
+{{else}}
+  <div class="hero-unit geddy-welcome-box">
+    <h1>Hello, stranger</h1>
+    <p>You're not authenticated with this app.</p>
+    <p>{{{ linkTo 'Click here to create a user account.' '/signup' }}}</p>
+    <p>{{{ linkTo 'Click here to log in' loginPath }}}</p>
   </div>
 {{/if}}
